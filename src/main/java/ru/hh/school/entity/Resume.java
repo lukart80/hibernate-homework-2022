@@ -1,9 +1,10 @@
 package ru.hh.school.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //TODO: оформите entity
+@Entity
+@Table(name = "resume")
 public class Resume {
   // TODO: сделать так, чтобы id брался из sequence-а
   // таким образом, мы сможем отправлять в бд запросы батчами.
@@ -15,15 +16,17 @@ public class Resume {
   // https://vladmihalcea.com/from-jpa-to-hibernates-legacy-and-enhanced-identifier-generators/
 
   @Id
-  @GeneratedValue(/* здесь место для вашего кода */)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resume_id_gen")
+  @SequenceGenerator(name = "resume_id_gen", sequenceName = "resume_id_seq")
   private Integer id;
 
   private String description;
 
-  Resume() {}
+  public Resume() {}
 
   public Resume(String description) {
     this.description = description;
   }
+
 
 }
