@@ -24,7 +24,7 @@ public class Employer {
   @Column(name = "creation_time")
   private LocalDateTime creationTime;
 
-  @OneToMany(mappedBy = "employer")
+  @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Vacancy> vacancies = new ArrayList<>();
 
   @Column(name = "block_time")
