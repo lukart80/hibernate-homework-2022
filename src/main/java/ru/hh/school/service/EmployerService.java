@@ -1,5 +1,6 @@
 package ru.hh.school.service;
 
+import org.hibernate.SessionFactory;
 import ru.hh.school.util.TransactionHelper;
 import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dao.GenericDao;
@@ -67,9 +68,13 @@ public class EmployerService {
     // про возврат в managed состояние: https://vladmihalcea.com/jpa-persist-and-merge
 
     transactionHelper.inTransaction(() -> {
+
       employer.setBlockTime(LocalDateTime.now());
       employer.getVacancies().forEach(v -> v.setArchivingTime(LocalDateTime.now()));
+      genericDao.update(employer);
     });
+
+
   }
 
   // долгая и важная логика, которую нельзя делать в транзакции
